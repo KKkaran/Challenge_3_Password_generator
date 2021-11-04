@@ -11,11 +11,9 @@ var upperCaseCharacters = [
 ]
 var numeric = [1,2,3,4,5,6,7,8,9,0]
 var specialCharacters = ['!','"','#','$','%','&','\'','(',')','*','+',',', '-','.'
-                            ,'/',':',';','<','=','>','?','@','[','\\',']','^','_','`','{','|','}','~']
+        ,'/',':',';','<','=','>','?','@','[','\\',']','^','_','`','{','|','}','~']
 
-for(let i=0;i<specialCharacters.length;i++){
-  console.log(specialCharacters[i])
-}
+
 
 // Write password to the #password input into the box
 function writePassword() {
@@ -69,9 +67,9 @@ function generatePassword(){
     includeSpecial : special
   }
 
-  passwordGeneration(passwordObject);
+  var password = passwordGeneration(passwordObject);
   var passwordText = document.querySelector("#password");
-  passwordText.value = lengthOfPassword +  " " + lowercase + " " + uppercase + " " + numeric + " " + special;
+  passwordText.value = password;
 
   //return lowerCase;
 }
@@ -117,10 +115,62 @@ function passwordGeneration(passwordObject){
 
   //console.log(passwordObject);
   //we have the object which contains the reqd info we need for password generation
+  var criteria = [];
+  //we will findout to which criterai user said true and will add to the list
+  //and then we will randomly pick a criteria and again randomly pick a char from that criteria
+  if(passwordObject.includeLowerCase){
+    criteria.push("lower")
+  }if(passwordObject.includeUpperCase){
+    criteria.push("upper")
+  }if(passwordObject.includeNumeric){
+    criteria.push("numeric")
+  }if(passwordObject.includeSpecial){
+    criteria.push("special")
+  }
+
+  randomNumber(criteria.length)
+
+  var passwordString = "";
+  for(var v=0;v<passwordObject.count;v++){
+    //passwordObject.count is length of password and 
+    //thats the number of times the loop will run
+    //console.log(v+1)
+    var t = randomNumber(criteria.length)
+
+    switch(criteria[t]){
+      case("lower"):
+        passwordString += lowerCaseCharacters[randomNumber(lowerCaseCharacters.length)]
+        break;
+      case("upper"):
+        passwordString += upperCaseCharacters[randomNumber(upperCaseCharacters.length)]
+        break;
+      case("numeric"):
+        passwordString += numeric[randomNumber(numeric.length)]
+        break;
+      case("special"):
+        passwordString += specialCharacters[randomNumber(specialCharacters.length)]
+        break;
+    }    
+  }
   
+  return passwordString;
+
+
+  // var passwordText = document.querySelector("#password");
+  // passwordText.value = passportString
+
+
 }
 
 // Add event listener to generate button
 
 //generateBtn.addEventListener("click", writePassword);
 generatePassword();
+
+function randomNumber(high){
+  
+  var r = Math.floor(Math.random() * high)
+  return r;
+
+}
+//randomNumber();
