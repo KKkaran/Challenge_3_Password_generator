@@ -21,7 +21,7 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
+  console.log(password)
 }
 //this function will generate password depending on the criteria
 //and the return value shall be passed to function writePassword
@@ -68,10 +68,8 @@ function generatePassword(){
   }
 
   var password = passwordGeneration(passwordObject);
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password;
-
-  //return lowerCase;
+  
+  return password;
 }
 
 //keeps asking until user types in a value [8,128] for password Length
@@ -83,13 +81,13 @@ function getPasswordLength(){
     length = prompt("How long of a password do you wish to create? (8 - 128)");
     if(parseInt(length) < 8 || parseInt(length) > 128){
       if(parseInt(length) < 8){
-        alert("The value you entered is too small for password generation. Invalid INput")
+        alert("The value you entered is too small for password generation. Invalid Input")
       }else{
-        alert("The value you entered is too big for password generation. Invalid INput")
+        alert("The value you entered is too big for password generation. Invalid Input")
       }
   
     }else if(parseInt(length) >=8 && parseInt(length) <=128){
-      alert("Good Input DOG!!")
+      //alert("Good Input DOG!!")
     }else{
       alert("Invalid input!!")
     }
@@ -101,7 +99,7 @@ function getPasswordLength(){
 //we use same method for uppercase/lowercase/special/numeric values
 function BooleanValue(criteria){
 
-  var input = confirm("Do you want the passowrd to include " + criteria +" characters?")
+  var input = confirm("Do you want the password to include " + criteria +" characters?")
   if(input){
     return true;
   }else{
@@ -162,15 +160,11 @@ function passwordGeneration(passwordObject){
 
 }
 
-// Add event listener to generate button
-
-//generateBtn.addEventListener("click", writePassword);
-generatePassword();
-
 function randomNumber(high){
   
   var r = Math.floor(Math.random() * high)
   return r;
 
 }
-//randomNumber();
+
+generateBtn.addEventListener("click", writePassword);
